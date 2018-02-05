@@ -1,0 +1,27 @@
+version: '2.3'
+
+services:
+  webserver:
+    container_name: care4d-server
+    build: ./docker/webserver
+    image: care4d
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      XDEBUG_CONFIG: "remote_host=192.168.1.37"
+    volumes:
+      - ./www:/var/www/html
+    links:
+      - db
+
+  db:
+    container_name: instabeauty-db
+    image: mysql:5.7
+    ports: 
+      - "3306:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=docker
+      - MYSQL_DATABASE=db_care4d
