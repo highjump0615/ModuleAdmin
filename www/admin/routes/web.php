@@ -16,6 +16,8 @@ Route::get('/', function () {
 });
 
 
-Route::group(['middleware' => ['web', 'guest']], function() {
+Route::group(['middleware' => ['guest']], function() {
     Route::get('/login', 'Auth\LoginController@showLoginForm');
 });
+
+Route::get('/module', 'ModuleController@showModule');
