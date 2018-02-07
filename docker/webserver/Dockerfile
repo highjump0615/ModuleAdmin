@@ -15,6 +15,7 @@ RUN docker-php-ext-install tokenizer
 RUN docker-php-ext-install zip
 
 # Install PECL extension
+RUN pecl channel-update pecl.php.net
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
 
