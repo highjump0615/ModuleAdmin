@@ -9,7 +9,7 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      XDEBUG_CONFIG: "remote_host=192.168.1.37"
+      XDEBUG_CONFIG: "remote_host=192.168.1.38"
     volumes:
       - ./www:/var/www/html
     links:
