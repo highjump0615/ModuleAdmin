@@ -54,7 +54,38 @@
                     <div class="col-sm-4 operation-area m-t-md">
                         <div class="form-group pull-right">
                             <button class="btn btn-primary " type="button"><i class="fa fa-search"></i>&nbsp;&nbsp;Filter</button>
-                            <button class="btn btn-success " type="button"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload</button>
+                            <button class="btn btn-success " type="button" data-toggle="modal" data-target="#modalAdd">
+                                <i class="fa fa-upload"></i>&nbsp;&nbsp;Upload
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Modal Dialog --}}
+            <div class="modal inmodal fade" id="modalAdd" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <i class="fa fa-cubes modal-icon"></i>
+                            <h4 class="modal-title">Add/Edit Module</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{-- Description --}}
+                            <div class="form-group">
+                                <label>Description</label>
+                                <input type="text" placeholder="Enter description for this module" class="form-control">
+                            </div>
+                            {{-- Moudle File --}}
+                            <div class="form-group">
+                                <label>Module</label>
+                                <input type="file" >
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
                         </div>
                     </div>
                 </div>
