@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="middle-box text-center animated fadeInDown">
+    <div class="middle-box text-center">
         <div>
             <h2 class="m-b-lg">Care4D Admin</h2>
 
