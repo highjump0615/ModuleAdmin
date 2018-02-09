@@ -1,6 +1,13 @@
 @extends('layouts.main')
 
 @section('style')
+    <!-- Ladda style -->
+    <link href="<?=asset('css/plugins/ladda/ladda-themeless.min.css') ?>" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="<?=asset('css/plugins/sweetalert/sweetalert.css') ?>" rel="stylesheet">
+
+    <link href="<?=asset('css/pagination.css') ?>" rel="stylesheet" />
+
     <style>
     </style>
 @endsection
@@ -32,34 +39,37 @@
             </div>
         </div>
 
-        <div class="wrapper wrapper-content animated fadeInRight ecommerce">
+        <div class="wrapper wrapper-content ecommerce">
 
             {{-- Filter --}}
             <div class="ibox-content m-b-sm border-bottom">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="control-label" for="order_id">Description</label>
-                            <input type="text" id="order_id" name="order_id" value="" placeholder="Description" class="form-control">
+                <form role="form" action="{{url('/')}}" method="get">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label" for="order_id">Description</label>
+                                <input type="text" name="desc" value="{{request('desc')}}" placeholder="Description" class="form-control">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="control-label" for="date_added">Date added</label>
-                            <div class="input-group date">
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="date_added" type="text" class="form-control" value="">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label" for="date_added">Date added</label>
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" class="form-control datepicker" name="date" value="{{request('date')}}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 operation-area m-t-md">
+                            <div class="form-group pull-right">
+                                <button class="btn btn-primary " type="submit"><i class="fa fa-search"></i>&nbsp;&nbsp;Filter</button>
+                                <button class="btn btn-success " type="button" data-toggle="modal" data-target="#modalAdd">
+                                    <i class="fa fa-upload"></i>&nbsp;&nbsp;Upload
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 operation-area m-t-md">
-                        <div class="form-group pull-right">
-                            <button class="btn btn-primary " type="button"><i class="fa fa-search"></i>&nbsp;&nbsp;Filter</button>
-                            <button class="btn btn-success " type="button" data-toggle="modal" data-target="#modalAdd">
-                                <i class="fa fa-upload"></i>&nbsp;&nbsp;Upload
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
 
             {{-- Modal Dialog --}}
@@ -71,25 +81,36 @@
                             <i class="fa fa-cubes modal-icon"></i>
                             <h4 class="modal-title">Add/Edit Module</h4>
                         </div>
-                        <div class="modal-body">
-                            {{-- Description --}}
-                            <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" placeholder="Enter description for this module" class="form-control">
+                        <form role="form" action="{{url('/module/save')}}" method="post" id="form-add" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <div class="modal-body">
+                                {{-- Description --}}
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <input type="text" placeholder="Enter description for this module" class="form-control"
+                                           name="description"
+                                           required>
+                                </div>
+                                {{-- Moudle File --}}
+                                <div class="form-group">
+                                    <label>Module</label>
+                                    <input type="file" name="fileData" required>
+                                </div>
                             </div>
-                            {{-- Moudle File --}}
-                            <div class="form-group">
-                                <label>Module</label>
-                                <input type="file" >
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                <button type="submit" id="" class="ladda-button btn btn-primary" data-style="slide-right">Save</button>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
+
+            {{-- Delete form --}}
+            <form role="form" action="{{url('/module/delete')}}" method="post" id="form-delete">
+                {{ csrf_field() }}
+                <input type="hidden" name="id">
+            </form>
 
             {{-- Table --}}
             <div class="row">
@@ -107,25 +128,36 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>
-                                        3214
-                                    </td>
-                                    <td>
-                                        Customer example
-                                    </td>
-                                    <td>
-                                        03/04/2015
-                                    </td>
-                                    <td class="text-right">
-                                        <div class="btn-group">
-                                            <button class="btn-white btn btn-xs">Edit</button>
-                                            <button class="btn-white btn btn-xs">Delete</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @if (count($modules) > 0)
+                                    @for ($i = 0; $i < count($modules); $i++)
+                                        <tr>
+                                            {{-- No --}}
+                                            <td>{{$i + $modules->firstItem()}}</td>
+                                            {{-- Description --}}
+                                            <td>{{$modules[$i]->description}}</td>
+                                            {{-- Created at --}}
+                                            <td>{{$modules[$i]->created_at}}</td>
+                                            <td class="text-right">
+                                                <div class="btn-group">
+                                                    {{--<button class="btn-white btn btn-xs btn-edit"--}}
+                                                            {{--onclick="editModule({{$modules[$i]->id}})">Edit</button>--}}
+                                                    <button class="btn-white btn btn-xs"
+                                                            onclick="deleteModule({{$modules[$i]->id}})">Delete</button>
+                                                </div>
+                                             </td>
+                                        </tr>
+                                    @endfor
+                                @else
+                                    <tr>
+                                        <td colspan="4"
+                                            class="text-center"
+                                        >No modules existing</td>
+                                    </tr>
+                                @endif
                                 </tbody>
                             </table>
+
+                            <ul id="pagination_data" class="pagination-sm pull-right"></ul>
 
                         </div>
                     </div>
@@ -137,15 +169,77 @@
 @endsection
 
 @section('script')
+    <script src="<?=asset('js/plugins/ladda/spin.min.js') ?>"></script>
+    <script src="<?=asset('js/plugins/ladda/ladda.min.js') ?>"></script>
+    <script src="<?=asset('js/plugins/ladda/ladda.jquery.min.js') ?>"></script>
+
+    <!-- Sweet alert -->
+    <script src="<?=asset('js/plugins/sweetalert/sweetalert.min.js') ?>"></script>
+
     <script>
+        var butSubmit = $('.ladda-button').ladda();
+
         $(document).ready(function() {
-            $('#date_added').datepicker({
+            $('.datepicker').datepicker({
                 todayBtn: "linked",
                 keyboardNavigation: false,
                 forceParse: false,
-                autoclose: true
+                autoclose: true,
+                format: 'yyyy-mm-dd'
             });
         });
 
+        // Form submission
+        $('#form-add').submit(function (event) {
+            // saving animation
+            butSubmit.ladda('start');
+        });
+
+        // Global vars
+        var gnTotalPage = '{{$modules->lastPage()}}';
+        var gnCurrentPage = '{{$modules->currentPage()}}';
+
+        gnTotalPage = 1;
+        gnCurrentPage = parseInt(gnCurrentPage);
+
+        /**
+         * Edit module
+         * @param moduleId
+         */
+        function editModule(moduleId) {
+            {{--$('#modalAdd').modal();--}}
+
+            {{--// fill data--}}
+            {{--$('#form-add').find('[name="description"]').val('{{$modules[$i]->description}}');--}}
+        }
+
+        /**
+         * Delete module
+         * @param moduleId
+         */
+        function deleteModule(moduleId) {
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this module.",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            }, function () {
+                // disable button
+                var butConfirm = $('button.confirm');
+                butConfirm.addClass('disabled');
+                butConfirm.prop("disabled", true);
+
+                // set value
+                var frmDelete = $('#form-delete');
+                frmDelete.find('[name="id"]').val(moduleId);
+                frmDelete.submit();
+            });
+        }
+
     </script>
+
+    <script type="text/javascript" src="<?=asset('/js/plugins/pagination/jquery.twbsPagination.min.js')?>"></script>
+    <script type="text/javascript" src="<?=asset('/js/pagination.js')?>"></script>
 @endsection

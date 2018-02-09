@@ -17,7 +17,7 @@
             </li>
             {{-- Module --}}
             <li @if ($menu == "module") class="active" @endif>
-                <a href="{{url('/module')}}">
+                <a href="{{url('/')}}">
                     <i class="fa fa-cubes"></i>
                     <span class="nav-label">Modules</span>
                 </a>

@@ -11,9 +11,6 @@
     <link href="<?=asset('css/bootstrap.min.css') ?>" rel="stylesheet">
     <link href="<?=asset('font-awesome/css/font-awesome.css') ?>" rel="stylesheet">
 
-    <!-- FooTable -->
-    <link href="<?=asset('css/plugins/footable/footable.core.css') ?>" rel="stylesheet">
-
     <link href="<?=asset('css/animate.css') ?>" rel="stylesheet">
     <link href="<?=asset('css/style.css') ?>" rel="stylesheet">
     <link href="<?=asset('css/app.css') ?>" rel="stylesheet">
@@ -40,9 +37,6 @@
 
 <!-- Data picker -->
 <script src="<?=asset('js/plugins/datapicker/bootstrap-datepicker.js') ?>"></script>
-
-<!-- FooTable -->
-<script src="<?=asset('js/plugins/footable/footable.all.min.js') ?>"></script>
 
 @yield('script')
 

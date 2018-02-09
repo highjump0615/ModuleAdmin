@@ -20,4 +20,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/logout', 'Auth\LoginController@logout');
 
     Route::get('/', 'ModuleController@showModule');
+    Route::post('/module/save', 'ModuleController@saveModule');
+    Route::get('/module/filter', 'ModuleController@filterModuleList');
+    Route::post('/module/delete', 'ModuleController@deleteModule');
 });
