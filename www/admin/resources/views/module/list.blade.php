@@ -23,7 +23,7 @@
                         <a href="#">Home</a>
                     </li>
                     <li class="active">
-                        <strong>Orders</strong>
+                        <strong>Modules</strong>
                     </li>
                 </ol>
             </div>

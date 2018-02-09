@@ -6,10 +6,10 @@
         <ul class="nav navbar-top-links navbar-right">
             <li>
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                     <span>admin <b class="caret"></b></span>
+                     <span>{{Auth::guard()->user()->username}}<b class="caret"></b></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="login.html">Logout</a></li>
+                    <li><a href="{{url('/logout')}}">Logout</a></li>
                 </ul>
             </li>
         </ul>
