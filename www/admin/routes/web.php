@@ -11,11 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => ['guest']], function() {
+    Route::get('/login', 'Auth\LoginController@showLoginForm');
+    Route::post('/login', 'Auth\LoginController@login');
 });
 
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/logout', 'Auth\LoginController@logout');
 
-Route::group(['middleware' => ['web', 'guest']], function() {
-    Route::get('/login', 'Auth\LoginController@showLoginForm');
+    Route::get('/', 'ModuleController@showModule');
+    Route::post('/module/save', 'ModuleController@saveModule');
+    Route::get('/module/filter', 'ModuleController@filterModuleList');
+    Route::post('/module/delete', 'ModuleController@deleteModule');
 });

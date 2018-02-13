@@ -1,0 +1,14 @@
+
+/* Side bar */
+.nav-header .title {
+    font-size: 15pt;
+}
+
+.ibox-content {
+    display: inline-block;
+    width: 100%;
+}
+
+.disabled {
+    opacity: 0.5;
+}

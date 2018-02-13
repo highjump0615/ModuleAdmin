@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateModulesTable extends Migration
 {
-    public static $tableName = 'users';
+    public static $tableName = 'modules';
 
     /**
      * Run the migrations.
@@ -15,16 +15,15 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create(CreateUsersTable::$tableName, function (Blueprint $table) {
+        Schema::create(CreateModulesTable::$tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->string('username')->unique();
-            $table->string('email')->unique();
-            $table->string('password');
+            $table->string('description');
+            $table->string('filePath');
 
-            $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -35,6 +34,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(CreateUsersTable::$tableName);
+        Schema::dropIfExists(CreateModulesTable::$tableName);
     }
 }
