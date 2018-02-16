@@ -50,8 +50,8 @@ class ModuleController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function saveModule(Request $request) {
-        if($request->has('module_id')) {
-            $mid = $request->input('product_id');
+        if($request->has('id')) {
+            $mid = $request->input('id');
             $m = Module::find($mid);
         }
         else {
