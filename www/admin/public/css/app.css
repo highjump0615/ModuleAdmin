@@ -12,3 +12,12 @@
 .disabled {
     opacity: 0.5;
 }
+
+.fbox {
+    display: flex;
+    align-items: center;
+}
+
+.fbox input:nth-child(1) {
+    margin-right: 20px;
+}

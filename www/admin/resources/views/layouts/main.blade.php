@@ -13,7 +13,7 @@
 
     <link href="<?=asset('css/animate.css') ?>" rel="stylesheet">
     <link href="<?=asset('css/style.css') ?>" rel="stylesheet">
-    <link href="<?=asset('css/app.css') ?>" rel="stylesheet">
+    <link href="<?=asset('css/app.css?180216') ?>" rel="stylesheet">
 
     <link href="<?=asset('css/plugins/datapicker/datepicker3.css') ?>" rel="stylesheet">
 

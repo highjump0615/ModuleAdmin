@@ -84,6 +84,8 @@
                         <form role="form" action="{{url('/module/save')}}" method="post" id="form-add" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="modal-body">
+                                {{--id--}}
+                                <input type="hidden" name="id" />
                                 {{-- Description --}}
                                 <div class="form-group">
                                     <label>Description</label>
@@ -94,7 +96,12 @@
                                 {{-- Moudle File --}}
                                 <div class="form-group">
                                     <label>Module</label>
-                                    <input type="file" name="fileData" required>
+                                    <div class="fbox">
+                                    <input type="text" placeholder="File Name" class="form-control"
+                                           name="fileName"
+                                           required>
+                                    <input type="file" name="fileData">
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -123,6 +130,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Description</th>
+                                    <th>File name</th>
                                     <th>Date added</th>
                                     <th class="text-right">Action</th>
                                 </tr>
@@ -130,17 +138,19 @@
                                 <tbody>
                                 @if (count($modules) > 0)
                                     @for ($i = 0; $i < count($modules); $i++)
-                                        <tr>
+                                        <tr data-mid="{{$modules[$i]->id}}">
                                             {{-- No --}}
                                             <td>{{$i + $modules->firstItem()}}</td>
                                             {{-- Description --}}
                                             <td>{{$modules[$i]->description}}</td>
+                                            {{-- File name --}}
+                                            <td>{{$modules[$i]->filePath}}</td>
                                             {{-- Created at --}}
                                             <td>{{$modules[$i]->created_at}}</td>
                                             <td class="text-right">
                                                 <div class="btn-group">
-                                                    {{--<button class="btn-white btn btn-xs btn-edit"--}}
-                                                            {{--onclick="editModule({{$modules[$i]->id}})">Edit</button>--}}
+                                                    <button class="btn-white btn btn-xs btn-edit"
+                                                            data-toggle="modal" data-target="#modalAdd">Edit</button>
                                                     <button class="btn-white btn btn-xs"
                                                             onclick="deleteModule({{$modules[$i]->id}})">Delete</button>
                                                 </div>
@@ -178,6 +188,7 @@
 
     <script>
         var butSubmit = $('.ladda-button').ladda();
+        var objInputName = $('input[name="fileData"]');
 
         $(document).ready(function() {
             $('.datepicker').datepicker({
@@ -203,17 +214,6 @@
         gnCurrentPage = parseInt(gnCurrentPage);
 
         /**
-         * Edit module
-         * @param moduleId
-         */
-        function editModule(moduleId) {
-            {{--$('#modalAdd').modal();--}}
-
-            {{--// fill data--}}
-            {{--$('#form-add').find('[name="description"]').val('{{$modules[$i]->description}}');--}}
-        }
-
-        /**
          * Delete module
          * @param moduleId
          */
@@ -237,6 +237,34 @@
                 frmDelete.submit();
             });
         }
+
+        $('input[name="fileData"]').change(function(e) {
+            // set file name to name box
+            $('input[name="fileName"]').val($(this).val().split('\\').pop());
+        });
+
+        // disable typing filename
+        $('input[name="fileName"]').on('keydown paste', function(e) {
+            e.preventDefault();
+        });
+
+        /**
+         * Edit module
+         * @param moduleId
+         */
+        $('.btn-edit').click(function() {
+            var objTr = $(this).closest('tr');
+            var frmAdd = $('#form-add');
+
+            // id
+            frmAdd.find('input[name="id"]').val(objTr.data('mid'));
+
+            // description
+            frmAdd.find('input[name="description"]').val(objTr.find('td:nth-child(2)').html());
+
+            // file name
+            frmAdd.find('input[name="fileName"]').val(objTr.find('td:nth-child(3)').html());
+        });
 
     </script>
 
