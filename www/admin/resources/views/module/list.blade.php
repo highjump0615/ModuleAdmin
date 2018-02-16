@@ -123,6 +123,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Description</th>
+                                    <th>File name</th>
                                     <th>Date added</th>
                                     <th class="text-right">Action</th>
                                 </tr>
@@ -135,6 +136,8 @@
                                             <td>{{$i + $modules->firstItem()}}</td>
                                             {{-- Description --}}
                                             <td>{{$modules[$i]->description}}</td>
+                                            {{-- File name --}}
+                                            <td>{{$modules[$i]->filePath}}</td>
                                             {{-- Created at --}}
                                             <td>{{$modules[$i]->created_at}}</td>
                                             <td class="text-right">

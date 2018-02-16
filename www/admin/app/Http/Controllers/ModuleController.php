@@ -69,7 +69,7 @@ class ModuleController extends Controller
                 }
 
                 // generate file name p**********.ext
-                $strName = 'p' . time() . uniqid() . '.' . $fileData->getClientOriginalExtension();
+                $strName = time() . uniqid() . '.' . $fileData->getClientOriginalExtension();
 
                 // move file to upload folder
                 $fileData->move(getModuleFilePath(), $strName);
