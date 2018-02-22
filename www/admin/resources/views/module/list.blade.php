@@ -144,7 +144,7 @@
                                             {{-- Description --}}
                                             <td>{{$modules[$i]->description}}</td>
                                             {{-- File name --}}
-                                            <td>{{$modules[$i]->filePath}}</td>
+                                            <td>{{$modules[$i]->filename_display}}</td>
                                             {{-- Created at --}}
                                             <td>{{$modules[$i]->created_at}}</td>
                                             <td class="text-right">

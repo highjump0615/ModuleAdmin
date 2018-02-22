@@ -16,5 +16,18 @@ class Module extends Model
         'description', 'filePath',
     ];
 
+    protected $appends = [
+        'filename_display'
+    ];
+
     use softDeletes;
+
+    /**
+     * Get the module name for user display
+     *
+     * @return bool|string
+     */
+    public function getFilenameDisplayAttribute() {
+        return substr($this->filePath, strlen(date('YmdHis')));
+    }
 }
