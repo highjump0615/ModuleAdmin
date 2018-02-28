@@ -12,7 +12,7 @@ class Version extends Model
      * @var array
      */
     protected $fillable = [
-        'version', 'description',
+        'version', 'description', 'url'
     ];
 
     protected $appends = [

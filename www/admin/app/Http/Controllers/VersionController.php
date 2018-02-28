@@ -65,4 +65,24 @@ class VersionController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * retrieves the latest version
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getLatestApi(Request $request) {
+        $version = Version::orderBy('version', 'desc')
+            ->first([
+                'version',
+                'description',
+                'url',
+                'created_at'
+            ]);
+
+        return response()->json([
+            'status' => 'success',
+            'version' => $version,
+        ]);
+    }
 }
