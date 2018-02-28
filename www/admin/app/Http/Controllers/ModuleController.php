@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Module;
+use Faker\Provider\DateTime;
 use Illuminate\Http\Request;
 
 use File;
@@ -94,5 +95,34 @@ class ModuleController extends Controller
         Module::find($moduleId)->delete();
 
         return redirect()->back();
+    }
+
+    public function getModulesApi(Request $request) {
+
+        $dateFormat = 'Y-m-d H:i:s';
+        $queryModule = Module::whereRaw('1=1');
+
+        if ($request->has('date')) {
+            $date = date($dateFormat, $request->input('date'));
+            $queryModule->where('created_at', '>=', $date);
+        }
+
+        $modulesDirty = $queryModule->orderBy('created_at', 'desc')->get();
+        $modules = [];
+
+        foreach ($modulesDirty as $m) {
+            $mEntry['id'] = $m->id;
+            $mEntry['name'] = $m->filename_display;
+            $mEntry['description'] = $m->description;
+            $mEntry['url'] = $request->root() . '/uploads/modules/' . $m->filePath;
+            $mEntry['created_at'] = $m->created_at->format($dateFormat);
+
+            $modules[] = $mEntry;
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'modules' => $modules,
+        ]);
     }
 }

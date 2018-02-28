@@ -17,4 +17,5 @@ Route::group(['prefix'=>'/v1'], function() {
 
     // for user authentication
     Route::get('/version/latest', 'VersionController@getLatestApi');
+    Route::get('/modules', 'ModuleController@getModulesApi');
 });
