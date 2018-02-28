@@ -19,8 +19,14 @@ Route::group(['middleware' => ['guest']], function() {
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/logout', 'Auth\LoginController@logout');
 
+    // modules
     Route::get('/', 'ModuleController@showModule');
     Route::post('/module/save', 'ModuleController@saveModule');
     Route::get('/module/filter', 'ModuleController@filterModuleList');
     Route::post('/module/delete', 'ModuleController@deleteModule');
+
+    // version
+    Route::get('/version', 'VersionController@showVersion');
+    Route::post('/version/save', 'VersionController@saveVersion');
+    Route::post('/version/delete', 'VersionController@deleteVersion');
 });
