@@ -22,6 +22,13 @@
                     <span class="nav-label">Modules</span>
                 </a>
             </li>
+            {{-- Version --}}
+            <li @if ($menu == "version") class="active" @endif>
+                <a href="{{url('/version')}}">
+                    <i class="fa fa-book"></i>
+                    <span class="nav-label">App Version</span>
+                </a>
+            </li>
         </ul>
     </div>
 
