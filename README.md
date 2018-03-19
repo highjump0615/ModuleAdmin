@@ -38,5 +38,5 @@ pdo, pdo_mysql, gd, curl, mbstring, xml, tokenizer, zip, PECL
 Implemented admin web pages based on [Inspinia](https://wrapbootstrap.com/theme/inspinia-responsive-admin-theme-WB0R5L90S) theme  
 
 ## Need to Improve
-- Proect download data with authentication
+- Protect download data with authentication
 - Improve features
